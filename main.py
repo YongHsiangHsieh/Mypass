@@ -4,7 +4,7 @@ from tkinter import messagebox
 import random
 import pyperclip
 
-SMALL_PAD_Y_BOTTOM = (0, 3)
+SMALL_PAD_Y_BOTTOM = (0, 5)
 
 
 # ---------------------------- Database ------------------------------- #
@@ -98,50 +98,52 @@ def view_history():
 # Window
 window = Tk()
 window.title("Password Manager")
-window.config(padx=50, pady=50)
+window.wm_resizable(False, False)
+window.config(padx=50, pady=50, bg='lightblue')
 
 # logo
 logo = PhotoImage(file='logo.png')
-bg_logo = Canvas(width=200, height=200, highlightthickness=0)
+bg_logo = Canvas(width=200, height=200, highlightthickness=0, bg='lightblue')
 bg_logo.create_image(100, 100, anchor='center', image=logo)
 bg_logo.grid(column=1, row=0)
 
 # ----- Website -----
 # Label
-web_label = Label(text="Website:")
+web_label = Label(text="Website:", bg='lightblue')
 web_label.grid(column=0, row=1, sticky='e')
 # Text Entry
-web_text = Entry()
+web_text = Entry(highlightthickness=0, borderwidth=0)
 web_text.grid(column=1, row=1, columnspan=2, sticky='nsew', pady=SMALL_PAD_Y_BOTTOM)
 web_text.focus()
 
 # ----- Email/Username -----
 # Label
-email_label = Label(text="Email/Username:")
+email_label = Label(text="Email/Username:", bg='lightblue')
 email_label.grid(column=0, row=2, sticky='e')
 # Email Entry
-email_text = Entry()
+email_text = Entry(highlightthickness=0, borderwidth=0)
 email_text.grid(column=1, row=2, columnspan=2, sticky='nsew', pady=SMALL_PAD_Y_BOTTOM)
 email_text.insert(0, "Wilson@email.com")
 
 # ----- Password -----
 # Label
-pass_label = Label(text="Password:")
+pass_label = Label(text="Password:", bg='lightblue')
 pass_label.grid(column=0, row=3, sticky='e')
 # Password Entry
-pass_text = Entry()
-pass_text.grid(column=1, row=3, sticky='nsew', pady=SMALL_PAD_Y_BOTTOM)
+pass_text = Entry(highlightthickness=0, borderwidth=0)
+pass_text.grid(column=1, row=3, sticky='nsew', pady=SMALL_PAD_Y_BOTTOM, padx=(0, 3))
 # Generate Button
-gen_but = Button(text="Generate Password", command=generate_password)
+gen_but = Button(text="Generate Password", command=generate_password, highlightthickness=0, bg='lightblue',
+                 borderwidth=0)
 gen_but.grid(column=2, row=3, sticky='nsew', pady=SMALL_PAD_Y_BOTTOM)
 
 # Add
 # Button
-add_but = Button(text="Add", command=save_data)
+add_but = Button(text="Add", command=save_data, highlightthickness=0, bg='lightblue', borderwidth=0)
 add_but.grid(column=1, row=4, sticky='nsew')
 
 # View
-view_but = Button(text="View history", command=view_history)
+view_but = Button(text="View history", command=view_history, highlightthickness=0, bg='lightblue', borderwidth=0)
 view_but.grid(column=2, row=4, sticky='nsew')
 
 init_db()
