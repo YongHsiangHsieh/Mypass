@@ -25,13 +25,23 @@ def save_password(website, email, password):
     conn.close()
 
 
-def get_password(website):
+def get_all_passwords():
     conn = sqlite3.connect('passwords.db')
     c = conn.cursor()
-    c.execute("SELECT password FROM passwords WHERE website=?", (website,))
-    password = c.fetchone()
+    c.execute("SELECT * FROM passwords")
+    records = c.fetchall()
     conn.close()
-    return password
+
+    # Check if records are empty
+    if not records:
+        return "No passwords found in the database."
+
+    # Format the output
+    formatted_output = "All Stored Passwords:\n\n"
+    for idx, (website, email, password) in enumerate(records):
+        formatted_output += f"{idx+1}. Website: {website}\nEmail: {email}\nPassword: {password}\n\n"
+
+    return formatted_output
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -76,6 +86,11 @@ def save_data():
         save_password(website, user, password)
         web_text.delete(0, END)
         pass_text.delete(0, END)
+
+
+# ---------------------------- View History------------------------------- #
+def view_history():
+    messagebox.showinfo(message=get_all_passwords())
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -123,7 +138,11 @@ gen_but.grid(column=2, row=3, sticky='nsew', pady=SMALL_PAD_Y_BOTTOM)
 # Add
 # Button
 add_but = Button(text="Add", command=save_data)
-add_but.grid(column=1, row=4, columnspan=2, sticky='nsew')
+add_but.grid(column=1, row=4, sticky='nsew')
+
+# View
+view_but = Button(text="View history", command=view_history)
+view_but.grid(column=2, row=4, sticky='nsew')
 
 init_db()
 window.mainloop()
