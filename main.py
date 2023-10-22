@@ -1,9 +1,37 @@
+import sqlite3
 from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
 
 SMALL_PAD_Y_BOTTOM = (0, 3)
+
+
+# ---------------------------- Database ------------------------------- #
+def init_db():
+    conn = sqlite3.connect('passwords.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS passwords
+                 (website TEXT, email TEXT, password TEXT)''')
+    conn.commit()
+    conn.close()
+
+
+def save_password(website, email, password):
+    conn = sqlite3.connect('passwords.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO passwords VALUES (?, ?, ?)", (website, email, password))
+    conn.commit()
+    conn.close()
+
+
+def get_password(website):
+    conn = sqlite3.connect('passwords.db')
+    c = conn.cursor()
+    c.execute("SELECT password FROM passwords WHERE website=?", (website,))
+    password = c.fetchone()
+    conn.close()
+    return password
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -45,8 +73,7 @@ def save_data():
 
     is_ok = messagebox.askokcancel(title=website, message=f"Confirm {user} with password: {password}")
     if is_ok:
-        with open('data.txt', mode='a') as data:
-            data.write(f"{user} => Website: {website}, Password: {password}\n")
+        save_password(website, user, password)
         web_text.delete(0, END)
         pass_text.delete(0, END)
 
@@ -98,4 +125,5 @@ gen_but.grid(column=2, row=3, sticky='nsew', pady=SMALL_PAD_Y_BOTTOM)
 add_but = Button(text="Add", command=save_data)
 add_but.grid(column=1, row=4, columnspan=2, sticky='nsew')
 
+init_db()
 window.mainloop()
