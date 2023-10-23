@@ -1,0 +1,22 @@
+{
+    "Amazon": {
+        "email": "Wilson@email.com",
+        "password": "4FwI##91"
+    },
+    "Google": {
+        "email": "Wilson@email.com",
+        "password": "4Z$k#1"
+    },
+    "Udemy": {
+        "email": "Wilson@email.com",
+        "password": "0*4s0H9T"
+    },
+    "Apple": {
+        "email": "Wilson@email.com",
+        "password": "2y%U8"
+    },
+    "Facebook": {
+        "email": "Wilson@email.com",
+        "password": "Pk03q+A"
+    }
+}
